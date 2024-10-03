@@ -25,4 +25,4 @@ jobs:
         run: rokit install --no-trust-check
 
       - name: Run test runner
-        run: lune run utils/PublishToRoblox.luau --auth ${{ secrets.ROBLOSECURITY }}
+        run: lune run utils/PublishToRoblox.luau -- --auth ${{ secrets.ROBLOSECURITY }}
