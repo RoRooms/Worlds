@@ -29,30 +29,10 @@ jobs:
       - name: Compile worlds
         run: bun run scripts/compileWorlds.ts
 
-      - name: Fetch tags
-        run: git fetch --tags
-
-      - name: Get latest tag
-        id: get_latest_tag
-        run: |
-          latest_tag=$(git describe --tags --abbrev=0)
-          echo "Latest tag: $latest_tag"
-          echo "::set-output name=latest_tag::$latest_tag"
-
-      - name: Increment version number
-        id: increment_version
-        run: |
-          # Get the latest version number from the tag
-          latest_version=${{ steps.get_latest_tag.outputs.latest_tag }}
-          new_version=$((latest_version + 1))
-          echo "Incrementing version from $latest_version to $new_version"
-          echo "::set-output name=new_version::$new_version"
-
       - name: Release worlds
         uses: softprops/action-gh-release@v1
         with:
           name: Worlds
-          tag_name: worlds-compile
           files: worlds.json
           generate_release_notes: true
           draft: false
