@@ -24,5 +24,8 @@ jobs:
       - name: Install Toolchain
         run: rokit install --no-trust-check
 
+      - name: Create .env file
+        run: echo "REMODEL_AUTH=${{ secrets.ROBLOSECURITY }}" >> .env
+
       - name: Run test runner
         run: lune run utils/PublishToRoblox.luau
