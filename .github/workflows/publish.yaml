@@ -33,6 +33,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: Worlds
+          tag_name: ${{ github.ref }}
           files: worlds.json
           generate_release_notes: true
           draft: false
