@@ -41,7 +41,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: Worlds
-          tag_name: ${{  }}
+          tag_name: ${{ steps.generate_release_tag.outputs.next_release_tag }}
           files: worlds.json
           generate_release_notes: true
           draft: false
