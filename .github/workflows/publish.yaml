@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+env:
+  REMODEL_AUTH: ${{ secrets.ROBLOSECURITY }}
+
 jobs:
   publish-worlds:
     runs-on: ${{ matrix.runner-os }}
@@ -24,5 +27,5 @@ jobs:
       - name: Install Toolchain
         run: rokit install --no-trust-check
 
-      - name: Publish worlds
-        run: lune run utils/PublishToRoblox.luau -- --auth ${{ secrets.ROBLOSECURITY }}
+      - name: Run test runner
+        run: lune run utils/PublishToRoblox.luau
