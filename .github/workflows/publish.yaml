@@ -32,7 +32,7 @@ jobs:
       - name: Release worlds
         uses: softprops/action-gh-release@v1
         with:
-          name: World Compilation
+          name: Worlds
           tag_name: worlds-compile
           files: worlds.json
           generate_release_notes: true
