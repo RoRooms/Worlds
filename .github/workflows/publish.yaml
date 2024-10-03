@@ -29,11 +29,28 @@ jobs:
       - name: Compile worlds
         run: bun run scripts/compileWorlds.ts
 
+      - name: Get latest release version
+        id: get_latest_release
+        run: |
+          LATEST_RELEASE=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          echo "Latest release version: $LATEST_RELEASE"
+          echo "::set-output name=latest_release::$LATEST_RELEASE"
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          LATEST_VERSION="${{ steps.get_latest_release.outputs.latest_release }}"
+          IFS='.' read -r major minor patch <<< "$LATEST_VERSION"
+          new_patch=$((patch + 1))
+          new_version="$major.$minor.$new_patch"
+          echo "New version: $new_version"
+          echo "::set-output name=new_version::$new_version"
+
       - name: Release worlds
         uses: softprops/action-gh-release@v1
         with:
           name: Worlds
-          tag_name: worlds-compile
+          tag_name: ${{ steps.increment_version.outputs.new_version }}
           files: worlds.json
           generate_release_notes: true
           draft: false
