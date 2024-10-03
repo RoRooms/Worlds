@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish-worlds:
+    runs-on: ${{ matrix.runner-os }}
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            runner-os: ubuntu-latest
+
+    steps:
+      - name: Checkout Main
+        uses: actions/checkout@v4.2.0
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install packages
+        run: bun install
+
+      - name: Compile worlds
+        run: bun run scripts/compileWorlds.ts
+
+      - name: Release worlds
+        uses: softprops/action-gh-release@v1
+        with:
+          name: World Compilation
+          tag_name: World Compilation
+          files: worlds.json
+          generate_release_notes: true
+          draft: false

@@ -1,5 +1,4 @@
 import { readdir } from "node:fs/promises";
-import { json } from "stream/consumers";
 
 const worldFiles = await readdir("./worlds");
 
