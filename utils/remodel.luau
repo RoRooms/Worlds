@@ -23,6 +23,7 @@ local function getAuthCookieWithFallbacks()
 	for index, arg in process.args do
 		if arg == "--auth" then
 			local cookieFromArgs = process.args[index + 1]
+			print(process.args, cookieFromArgs)
 			if cookieFromArgs and #cookieFromArgs > 0 then
 				return `.ROBLOSECURITY={cookieFromArgs}`
 			end
